@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<libraryInfos>
+<libraryInfo home="C:\Cstone" version="1.6.0_23">
+<bootpath>
+<entry path="C:\Cstone\jre\lib\resources.jar"/>
+<entry path="C:\Cstone\jre\lib\rt.jar"/>
+<entry path="C:\Cstone\jre\lib\sunrsasign.jar"/>
+<entry path="C:\Cstone\jre\lib\jsse.jar"/>
+<entry path="C:\Cstone\jre\lib\jce.jar"/>
+<entry path="C:\Cstone\jre\lib\charsets.jar"/>
+<entry path="C:\Cstone\jre\lib\modules\jdk.boot.jar"/>
+<entry path="C:\Cstone\jre\classes"/>
+</bootpath>
+<extensionDirs>
+<entry path="C:\Cstone\jre\lib\ext"/>
+<entry path="C:\WINDOWS\Sun\Java\lib\ext"/>
+</extensionDirs>
+<endorsedDirs>
+<entry path="C:\Cstone\jre\lib\endorsed"/>
+</endorsedDirs>
+</libraryInfo>
+<libraryInfo home="C:\Cstone\JRE" version="1.6.0_23">
+<bootpath>
+<entry path="C:\Cstone\JRE\lib\resources.jar"/>
+<entry path="C:\Cstone\JRE\lib\rt.jar"/>
+<entry path="C:\Cstone\JRE\lib\sunrsasign.jar"/>
+<entry path="C:\Cstone\JRE\lib\jsse.jar"/>
+<entry path="C:\Cstone\JRE\lib\jce.jar"/>
+<entry path="C:\Cstone\JRE\lib\charsets.jar"/>
+<entry path="C:\Cstone\JRE\lib\modules\jdk.boot.jar"/>
+<entry path="C:\Cstone\JRE\classes"/>
+</bootpath>
+<extensionDirs>
+<entry path="C:\Cstone\JRE\lib\ext"/>
+<entry path="C:\WINDOWS\Sun\Java\lib\ext"/>
+</extensionDirs>
+<endorsedDirs>
+<entry path="C:\Cstone\JRE\lib\endorsed"/>
+</endorsedDirs>
+</libraryInfo>
+</libraryInfos>

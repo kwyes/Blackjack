@@ -1,0 +1,73 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+
+public class main {
+
+	/**
+	 * @param args
+	 */
+	
+	ArrayList<Integer> playerNum = new ArrayList();
+	ArrayList<String> playerCard = new ArrayList();
+	
+	
+	
+	ArrayList<Integer> DealerNum = new ArrayList();
+	ArrayList<String> DealerCard = new ArrayList();
+	
+	Scanner input = new Scanner(System.in);
+	
+	
+
+	
+	
+	public static void main(String[] args) {
+		Deck Dealer = new Deck(); 
+		Deck Player = new Deck();
+		int DealerSum, PlayerSum;
+		//sum1 = 0;
+		Dealer.pullCard();
+		Player.pullCard();
+		
+		System.out.println("Dealer1 " + Dealer.str);
+		DealerSum = Dealer.num;
+	
+		
+		System.out.println();		
+		Dealer.pullCard();
+		
+		System.out.println("Dealer2 " + Dealer.str);
+		DealerSum += Dealer.num;
+		System.out.println("Dealer2 sum : " + DealerSum);
+		System.out.println();		
+		System.out.println("------------------------------");		
+		System.out.println();		
+		
+		
+		//-----------------------------------------------------
+		
+		//Player.pullCard();
+		System.out.println("Player1 " +Player.str);
+		PlayerSum = Player.num;
+		
+		System.out.println();		
+
+		System.out.println();		
+		
+		Player.pullCard();
+		System.out.println("Player2 " +Player.str);
+		PlayerSum += Player.num;
+		System.out.println("Player sum : " + PlayerSum);
+		
+		
+		
+		
+		
+
+	}
+
+	
+	
+	
+}

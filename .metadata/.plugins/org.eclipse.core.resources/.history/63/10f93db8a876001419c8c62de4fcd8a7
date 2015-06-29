@@ -1,0 +1,382 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import javax.swing.*;
+
+import java.awt.*; 
+
+
+
+public class MainProgram  extends JPanel implements ActionListener {
+
+
+	private ArrayList<Integer> playerNum = new ArrayList<Integer>();
+	private ArrayList<String> playerCard = new ArrayList<String>();	
+	
+	private ArrayList<Integer> dealerNum = new ArrayList<Integer>();
+	private ArrayList<String> dealerCard = new ArrayList<String>();
+	static JFrame f;
+	static Container con = f.getContentPane(); 
+	
+	Scanner input;
+	
+	private Deck Dealer; 
+	private Deck Player;
+	
+	int dealerSum, dealerIndex;
+	int playerSum, playerIndex;
+	
+	private JButton btnHit, btnStay, btnRestart, btnHelp, btnStart;
+	private JLabel lbDealer, lbUser, lbResult, lb1, lb2;
+	private JTextField txtTimer;
+	
+	private clock timer;
+	Thread timerThread;
+	
+	Image img = null; 
+	
+
+	
+	public MainProgram() 
+	{		
+		input = new Scanner(System.in);	
+		Dealer = new Deck(); 
+		Player = new Deck();
+		//user interface
+		
+	    Toolkit kit = Toolkit.getDefaultToolkit(); 
+	    img = kit.getImage("blackjack.jpg"); 
+	    setLayout(null); 			    
+		
+		btnHit = new JButton("Hit"); 
+	    btnHit.setBounds(80, 700, 100, 30); 
+	    add(btnHit);
+	    btnHit.addActionListener(this);
+	    btnHit.setVisible(false);
+	      
+	  	      
+	    btnStay = new JButton("Stay"); 
+	    btnStay.setBounds(350, 700, 100, 30); 
+	    add(btnStay);
+	    btnStay.addActionListener(this);
+	    btnStay.setVisible(false);
+		
+	    btnRestart = new JButton("Start Again"); 
+	    btnRestart.setBounds(620, 700, 100, 30); 
+	    btnRestart.addActionListener(this);
+	    add(btnRestart);
+	    btnRestart.setVisible(false);
+	    
+	    btnHelp = new JButton("HELP Page"); 
+	    btnHelp.setBounds(50, 30, 100, 30); 
+	    btnHelp.addActionListener(this);
+	    add(btnHelp);
+	    
+	    btnStart = new JButton("Start"); 
+	    btnStart.setBounds(330, 330, 100, 30); 
+	    btnStart.addActionListener(this);	    
+	    add(btnStart);
+	    
+	    lb1 = new JLabel("<html><span style='font-size:15px'><font color = 'white'>Dealer : </font></span></html>");
+
+	    lb1.setBounds(100, 50, 100, 100);
+	    add(lb1);
+	    
+	    lbDealer = new JLabel();
+	    lbDealer.setBounds(350, 50, 50, 100);
+	    add(lbDealer);
+	    
+	    lb2 = new JLabel("<html><span style='font-size:15px'><font color = 'white'>User : </font></span></html>");
+	    lb2.setBounds(100, 580, 100, 100);
+	    add(lb2);
+	    
+	    lbUser = new JLabel();
+	    lbUser.setBounds(350, 580, 50, 100);
+	    add(lbUser);
+	      
+	    lbResult = new JLabel("<html><span style='font-size:15px'><font color = 'white'>Result</font></span></html>");
+	    lbResult.setBounds(350, 300, 100, 100);
+	    add(lbResult);
+	    
+		txtTimer = new JTextField();
+		add(txtTimer);
+		txtTimer.setBounds(620, 30, 100, 25);				
+		
+		playerIndex = -1;
+		dealerIndex = -1;
+				
+	}
+	
+	
+	protected void paintComponent(Graphics g) 
+	 { 
+	    g.drawImage(img, 0, 0, 800, 800, this); 
+	      //background image size control
+	 } 
+		
+	
+	
+	public static void main(String[] args) 
+	{
+		
+		MainProgram mp = new MainProgram();
+		f = new JFrame();
+		f.setPreferredSize(new Dimension(800, 800));		
+		f.setLocation(0, 0); 
+		
+		con.add(mp); 
+	    f.pack(); 
+	    f.setVisible(true); 
+	    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+	    
+	    Toolkit tk = Toolkit.getDefaultToolkit();
+	    Image img = tk.getImage( "cursor.png" ); 
+	    Cursor myCursor = tk.createCustomCursor( img, new Point(10,10), "cursor" );
+	    f.setCursor(myCursor);
+
+	}
+
+	
+	public void PlayerPick()
+	{
+		
+		Player.pullCard();
+		playerNum.add(Player.num);
+		playerCard.add(Player.str);
+		playerIndex++;
+		
+	}
+	
+	public void DealerPick()
+	{
+		
+		Dealer.pullCard();
+		dealerNum.add(Dealer.num);
+		dealerCard.add(Dealer.str);
+		dealerIndex++;		
+		
+	}
+	
+	public void DealerFin()
+	{
+		while(dealerSum < 17)
+		{
+			DealerPick();
+			dealerSum += dealerNum.get(dealerIndex);
+			if (dealerSum > 21)
+			{
+				for (int index = 0; index < dealerNum.size(); index++)
+				{
+					if(dealerNum.get(index) == 11)
+					{
+						playerNum.set(index,1);
+					}					
+				}			
+			}
+		}
+		
+	}
+	
+	public void Winner()
+	{
+		DealerFin();
+		
+		if (playerSum == 21)
+		{
+			if (playerSum == dealerSum)
+			{
+				lbResult.setText("<html><span style='font-size:15px'><font color = 'white'>Draw</font></span></html>");
+			}
+			lbResult.setText("<html><span style='font-size:15px'><font color = 'white'>You Won</font></span></html>");
+			
+		}
+		else if (playerSum > 21)
+		{
+			for (int index = 0; index < playerNum.size(); index++)
+			{
+				if(playerNum.get(index) == 11)
+				{
+					playerNum.set(index,1);
+					
+					if (playerSum == dealerSum)
+					{
+						lbResult.setText("<html><span style='font-size:15px'><font color = 'white'>Draw</font></span></html>");
+					}
+					else if (playerSum > dealerSum)
+						lbResult.setText("<html><span style='font-size:15px'><font color = 'white'>You Won</font></span></html>");
+					else 
+						lbResult.setText("<html><span style='font-size:15px'><font color = 'white'>You Lost</font></span></html>");
+				}
+				lbResult.setText("<html><span style='font-size:15px'><font color = 'white'>You Lost</font></span></html>");
+			}
+			
+			
+			
+		}
+		else
+		{
+			if (playerSum == dealerSum)
+			{
+				lbResult.setText("<html><span style='font-size:15px'><font color = 'white'>Draw</font></span></html>");
+			}
+			else if (playerSum > dealerSum)
+				lbResult.setText("<html><span style='font-size:15px'><font color = 'white'>You Won</font></span></html>");
+			else 
+			{
+				if (dealerSum > 21)
+					lbResult.setText("<html><span style='font-size:15px'><font color = 'white'>You Won</font></span></html>");
+				else
+					lbResult.setText("<html><span style='font-size:15px'><font color = 'white'>You Lost</font></span></html>");
+			}
+			
+		}
+		
+		String d;
+		d = "<html><span style='font-size:15px'><font color = 'white'>";
+		for (int index = 0; index < dealerCard.size(); index++)
+	    {
+	         d += "Index: " + index + " , Dealer's card : " + dealerCard.get(index) + "<br/>" ;
+	    }
+		
+		d += "Sum of the Dealer's cards : " + dealerSum;
+		d += "</font></span></html>";
+        lbDealer.setText(d);
+		
+		btnStay.setVisible(false);
+	    btnHit.setVisible(false);
+	}
+	
+	public void actionPerformed(ActionEvent arg0) {
+		
+		if (arg0.getSource() == btnStart)
+		{
+			DealerPick();
+			lbDealer.setBounds(250, 50, 500, 100);
+			String d;
+			d = "<html><span style='font-size:15px'><font color = 'white'>";
+			for (int index = 0; index < dealerCard.size(); index++)
+		    {
+		         dealerSum += dealerNum.get(index);
+		         d += "Dealer's card : " + dealerCard.get(index) + "<br/>" ;
+		    }
+			
+			d += "Sum of the Dealer's cards : " + dealerSum;
+			d += "</font></span></html>";
+	        lbDealer.setText(d);
+			
+			
+			PlayerPick();
+			PlayerPick();
+			lbUser.setBounds(250, 580, 500, 100);
+			String p;
+			p = "<html><span style='font-size:15px'><font color = 'white'>";
+			
+			for (int index = 0; index < playerCard.size(); index++)
+		    {
+		         playerSum += playerNum.get(index);
+		         p += "Player's card : " + playerCard.get(index)  + "<br/>" ;
+		    }			
+			
+			p += "Sum of the Player's cards : " + playerSum;
+			p += "</font></span></html>";
+			lbUser.setText(p);
+			
+			timer = new clock(txtTimer);
+			//timer.start();
+			timerThread = new Thread(timer);
+			timerThread.start();
+			
+			btnStart.setVisible(false);
+		
+			btnStay.setVisible(true);
+			btnRestart.setVisible(true);
+		    btnHit.setVisible(true);
+		    
+		}
+		
+		if (arg0.getSource() == btnHit)
+		{
+			PlayerPick();
+			String p = "<html><span style='font-size:15px'><font color = 'white'>";
+			for (int pIndex = 0; pIndex < playerCard.size(); pIndex++)
+		    {
+				p += "Player's card : " + playerCard.get(pIndex)  + "<br/>" ;				
+		    }
+			playerSum += playerNum.get(playerIndex);
+			p += "Sum of the Player's cards : " + playerSum;
+			p += "</font></span></html>";
+			lbUser.setText(p);
+			if (playerSum >= 21)
+			{			
+				Winner();
+				timer.stopClock();
+			}
+			if (playerSum == 21)
+			{
+				Winner();
+				timer.stopClock();
+			}
+		}		
+		
+		if (arg0.getSource() == btnStay)
+		{
+			Winner();
+			timer.stopClock();
+		}
+		
+		
+		if (arg0.getSource() == btnHelp)
+		{		
+			
+			JOptionPane.showMessageDialog(this,"Basic Blackjack Rules:\n"
+				    + "The goal of blackjack is to beat the dealer's hand without going over 21.\n"
+				    + "Face cards are worth 10. Aces are worth 1 or 11,\n"
+				    + "whichever makes a better hand. Each player starts with two cards, \n"
+				    + "one of the dealer's cards is hidden until the end.\n"
+				    + "To 'Hit' is to ask for another card.\n"
+				    + "To 'Stand' is to hold your total and end your turn.\n"
+				    + "If you go over 21 you bust, and the dealer wins regardless of the dealer's hand.\n"
+					+ "If you are dealt 21 from the start (Ace & 10), you got a blackjack. \n"
+				    + "Dealer will hit until his/her cards total 17 or higher. \n"
+					+ "Split can be done when you have two of the same card - the pair is split into two hands. \n"
+				    + "You can only split on the first move, or first move of a hand created by a split.\n "
+					+ "You cannot play on two aces after they are split.\n"
+				    + "Good Luck");			
+		}
+		
+
+		
+        //p +=  lbUser.getText() + "<br/>";
+		
+		if (arg0.getSource() == btnRestart)
+		{
+			//main(null);
+			btnStart.setVisible(true);
+			btnStay.setVisible(false);
+			lbUser.setText("");
+			lbDealer.setText("");
+			lbResult.setText("");
+		
+			playerNum.clear();
+			playerCard.clear();
+			
+			dealerNum.clear();
+			dealerCard.clear();
+			
+			dealerSum = 0;
+			dealerIndex = 0;
+			playerSum = 0;
+			playerIndex = 0;
+	
+			
+		}
+		
+		
+		
+	}
+
+
+	
+}

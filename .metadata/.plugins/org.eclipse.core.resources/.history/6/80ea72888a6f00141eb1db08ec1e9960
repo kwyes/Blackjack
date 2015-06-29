@@ -1,0 +1,120 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+
+public class MainProgram {
+
+	/**
+	 * @param args
+	 */
+	
+	private ArrayList<Integer> PlayerNum = new ArrayList<Integer>();
+	private ArrayList<String> PlayerCard = new ArrayList<String>();	
+	
+	private ArrayList<Integer> DealerNum = new ArrayList<Integer>();
+	private ArrayList<String> DealerCard = new ArrayList<String>();
+	
+	Scanner input;
+	
+	private Deck Dealer = new Deck(); 
+	private Deck Player = new Deck();
+	
+	int DealerSum;
+	int PlayerSum;
+
+	public MainProgram() {
+		input = new Scanner(System.in);
+		
+	}
+	
+	public static void main(String[] args) {
+		MainProgram mp = new MainProgram();
+		mp.DealerPick();
+		
+
+		System.out.println("Dealer1 : " + mp.getDealearCard(0));
+	
+		mp.DealerPick();
+
+		System.out.println("Dealer2 : " + mp.getDealearCard(1));
+		System.out.println();	
+		
+		mp.PlayerPick();
+		System.out.println("Player1 : " + mp.getPlayerCard(0));
+		
+		mp.PlayerPick();
+		System.out.println("Player1 : " + mp.getPlayerCard(1));
+		
+		/*
+		DealerSum = DealerNum.get(0) + DealerNum.get(1);
+		
+		System.out.println();	
+		System.out.println("Dealer2 sum : " + DealerSum);
+		System.out.println();		
+		System.out.println("------------------------------");		
+		System.out.println();				
+		
+		//-----------------------------------------------------
+		
+		playerPick();
+		System.out.println("Player1 : " + PlayerCard.get(0));
+
+		System.out.println();		
+
+		playerPick();
+		
+		System.out.println("Player2 : " + PlayerCard.get(1));
+		PlayerSum = PlayerNum.get(0) + PlayerNum.get(1);
+		System.out.println();	
+		System.out.println("Player sum : " + PlayerSum);
+		
+		*/
+		
+		
+
+	}
+
+	public String getDealearCard(int index)
+	{
+		 return DealerCard.get(index);
+	}
+	
+	public int getDealerNumber(int index)
+	{
+		return DealerNum.get(index);
+	}
+	
+	
+	public String getPlayerCard(int index)
+	{
+		return PlayerCard.get(index);
+	}
+	
+	public int getPlayerNumber(int index)
+	{
+		return PlayerNum.get(index);
+	}
+	
+	
+	public void PlayerPick()
+	{
+		
+		Player.pullCard();
+		PlayerNum.add(Player.num);
+		PlayerCard.add(Player.str);
+
+		
+	}
+	
+	public void DealerPick()
+	{
+		
+		Dealer.pullCard();
+		DealerNum.add(Dealer.num);
+		DealerCard.add(Dealer.str);
+
+		
+	}
+	
+	
+}

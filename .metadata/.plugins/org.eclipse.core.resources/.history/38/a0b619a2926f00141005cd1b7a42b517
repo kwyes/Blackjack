@@ -1,0 +1,171 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import javax.swing.*;
+
+
+public class MainProgram  extends JFrame implements ActionListener {
+
+
+	private ArrayList<Integer> PlayerNum = new ArrayList<Integer>();
+	private ArrayList<String> PlayerCard = new ArrayList<String>();	
+	
+	private ArrayList<Integer> DealerNum = new ArrayList<Integer>();
+	private ArrayList<String> DealerCard = new ArrayList<String>();
+	
+	Scanner input;
+	
+	private Deck Dealer = new Deck(); 
+	private Deck Player = new Deck();
+	
+	int DealerSum;
+	int PlayerSum;
+	
+	private JButton btnhit, btnstay, btnsplit;
+	private JLabel l1;
+	private JTextField txt1, txt2;
+	private JTextField txtTimer;
+	
+	private clock timer;
+	
+
+	
+
+	
+	public MainProgram() {
+		
+		input = new Scanner(System.in);
+	    setTitle("Blackjack");
+	    this.setBounds(100, 100, 1000, 600);
+	    setLocationRelativeTo(null);
+	    //setDefaultCloseOperation(EXIT_ON_CLOSE);
+	    setVisible(true);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)	;
+
+	    //setLayout(new BorderLayout());
+	    //setContentPane(new JLabel(new ImageIcon("blackjack.jpg")));
+	    //setLayout(new FlowLayout());
+	    btnhit = new JButton("Hit");
+	    add(btnhit);
+	    btnhit.setBounds(30, 170, 80, 25);
+	    btnhit.addActionListener(this);
+	    
+	    btnstay = new JButton("Stay");
+	    add(btnstay);
+	    btnstay.setBounds(130, 170, 80, 25);
+	    btnstay.addActionListener(this);
+	    
+	    btnsplit = new JButton("Split");
+	    add(btnsplit);
+	    btnsplit.setBounds(230, 170, 80, 25);
+	    btnsplit.addActionListener(this);
+	    
+	    
+		txtTimer = new JTextField();
+		add(txtTimer);
+		txtTimer.setBounds(10, 20, 100, 25);
+
+
+		timer = new clock(txtTimer);
+		
+	    
+	    
+		txt1 = new JTextField();
+		add(txt1);	// adding to the frame
+		txt1.setBounds(70, 100, 80, 50);
+		
+	}
+	
+	
+
+	
+	
+	public static void main(String[] args) {
+		
+		MainProgram mp = new MainProgram();
+
+	}
+
+	public String getDealearCard(int index)
+	{
+		 return DealerCard.get(index);
+	}
+	
+	public int getDealerNumber(int index)
+	{
+		return DealerNum.get(index);
+	}
+	
+	
+	public String getPlayerCard(int index)
+	{
+		return PlayerCard.get(index);
+	}
+	
+	public int getPlayerNumber(int index)
+	{
+		return PlayerNum.get(index);
+	}
+	
+	
+	public void PlayerPick()
+	{
+		
+		Player.pullCard();
+		PlayerNum.add(Player.num);
+		PlayerCard.add(Player.str);
+		
+	}
+	
+	public void DealerPick()
+	{
+		
+		Dealer.pullCard();
+		DealerNum.add(Dealer.num);
+		DealerCard.add(Dealer.str);
+		
+	}
+	
+	public void actionPerformed(ActionEvent arg0) {
+		
+		if (arg0.getSource() == btnhit)
+		{
+			DealerPick();
+			System.out.println("Dealer1 : " + getDealearCard(0));
+			DealerPick();
+			System.out.println("Dealer1 : " + getDealearCard(1));
+			
+			DealerSum = getDealerNumber(0) + getDealerNumber(1);
+			
+			System.out.println("Dealer sum : " + DealerSum);
+			System.out.println();	
+			
+			PlayerPick();
+			System.out.println("Player1 : " + getPlayerCard(0));
+			
+			PlayerPick();
+			System.out.println("Player1 : " + getPlayerCard(1));
+			
+			PlayerSum = getPlayerNumber(0) + getPlayerNumber(1);
+			
+			System.out.println("Dealer sum : " + PlayerSum);
+			
+			
+
+		}
+		
+		if (arg0.getSource() == btnstay)
+		{
+			
+		}
+		
+		
+
+		
+		
+		
+	}
+	
+}

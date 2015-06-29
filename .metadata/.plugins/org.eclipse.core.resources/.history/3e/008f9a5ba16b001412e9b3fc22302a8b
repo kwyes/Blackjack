@@ -1,0 +1,36 @@
+import java.util.Random;
+
+
+public class Deck {
+
+	String deck [] = {"2","3","4","5","6","7","8","9","10","Jack","Queen","King","Ace"};
+	String suit [] = {"Spades ", "Hearts ", "Diamonds ", "Clubs "};
+	Random rand;
+	int num;
+	String str;
+	
+	
+	public void pullCard() {
+		//String a;
+		
+
+		rand = new Random();		
+		int dn = rand.nextInt(13);
+		int sn = rand.nextInt(4);
+		
+		str = suit[sn] + " " + deck[dn];
+		
+		if(dn >= 0 && dn <= 8)
+			num = dn + 2;
+		else if(dn <= 11 && dn >= 9)
+			num = 10;
+		else
+			num = 11;
+		
+	
+	}
+	
+	
+	
+	
+}

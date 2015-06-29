@@ -1,0 +1,88 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+
+public class main {
+
+	/**
+	 * @param args
+	 */
+	
+	private ArrayList<Integer> PlayerNum = new ArrayList<Integer>();
+	private ArrayList<String> PlayerCard = new ArrayList<String>();	
+	
+	private ArrayList<Integer> DealerNum = new ArrayList<Integer>();
+	private ArrayList<String> DealerCard = new ArrayList<String>();
+	
+	Scanner input;
+	
+	private Deck Dealer = new Deck(); 
+	private Deck Player = new Deck();
+	
+	int DealerSum;
+	int PlayerSum;
+
+	
+	
+	public static void main(String[] args) {
+
+
+		DealerPick();
+		System.out.println("Dealer1 : " + DealerCard.get(0));
+		
+		System.out.println();	
+		
+		DealerPick();
+
+		System.out.println("Dealer2 : " + DealerCard.get(1));
+		DealerSum = DealerNum.get(0) + DealerNum.get(1);
+		
+		System.out.println();	
+		System.out.println("Dealer2 sum : " + DealerSum);
+		System.out.println();		
+		System.out.println("------------------------------");		
+		System.out.println();				
+		
+		//-----------------------------------------------------
+		
+		playerPick();
+		System.out.println("Player1 : " + PlayerCard.get(0));
+
+		System.out.println();		
+
+		playerPick();
+		
+		System.out.println("Player2 : " + PlayerCard.get(1));
+		PlayerSum = PlayerNum.get(0) + PlayerNum.get(1);
+		System.out.println();	
+		System.out.println("Player sum : " + PlayerSum);
+		
+		
+		
+		
+
+	}
+
+	
+	public void playerPick()
+	{
+		
+		Player.pullCard();
+		PlayerNum.add(Player.num);
+		PlayerCard.add(Player.str);
+
+		
+	}
+	
+	public void DealerPick()
+	{
+		
+		Dealer.pullCard();
+		DealerNum.add(Dealer.num);
+		DealerCard.add(Dealer.str);
+
+		
+	}
+	
+	
+}
